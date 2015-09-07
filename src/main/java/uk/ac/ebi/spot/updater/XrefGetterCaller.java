@@ -43,6 +43,8 @@ public class XrefGetterCaller {
         String parentClassEfoId = null;
 
         //-parent EFO_0005297 -output /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/xrefGetterCaller_ouput.txt -ontoDir /Users/catherineleroy/Documents/github_project/ExperimentalFactorOntology/ExFactorInOWL/releasecandidate
+        //mvn exec:java -Dexec.mainClass=uk.ac.ebi.spot.updater.XrefGetterCaller -Dexec.args="-parent EFO_0005297 -output /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/xrefGetterCaller_ouput.txt -ontoDir /Users/catherineleroy/Documents/github_project/ExperimentalFactorOntology/ExFactorInOWL/releasecandidate"
+
 
         String output = null;
         for(int i = 0; i<args.length; i++){

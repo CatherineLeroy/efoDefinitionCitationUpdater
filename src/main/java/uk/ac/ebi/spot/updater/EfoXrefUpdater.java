@@ -16,8 +16,11 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
-// programm argument : -dummy true -remove true -ontoDir /Users/catherineleroy/Documents/github_project/ExperimentalFactorOntology/ExFactorInOWL/releasecandidate -i /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/xrefs_all.txt
 // programm argument : -dummy true -remove true -ontoDir /Users/catherineleroy/Documents/github_project/ExperimentalFactorOntology/ExFactorInOWL/releasecandidate -i /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/xrefGetterCaller_ouput.txt -output /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/EfoXrefUpdater_output.txt
+
+
+//mvn exec:java -Dexec.mainClass=uk.ac.ebi.spot.updater.EfoXrefUpdater -Dexec.args="-dummy true -remove true -ontoDir /Users/catherineleroy/Documents/github_project/ExperimentalFactorOntology/ExFactorInOWL/releasecandidate -i /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/xrefGetterCaller_ouput.txt -output /Users/catherineleroy/Documents/non_github_project/EFOxrefUpdate/EfoXrefUpdater_output.txt"
+
 
 
 /**
@@ -62,7 +65,6 @@ public class EfoXrefUpdater {
         String inputFile = null;
 
         for(int i = 0; i<args.length; i++){
-            System.out.println(args[i]);
            if("-dummy".equals(args[i])){
                if(args[i+1].equals("true")){
                    dummy = true;
