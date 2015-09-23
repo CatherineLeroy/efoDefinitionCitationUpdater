@@ -54,7 +54,9 @@ public class Efo2Xref {
         String header = "IRI\tlabel";
         List<String> externalOntologies = new ArrayList<String>();
         for(OntologyEnum ontologyEnum : OntologyEnum.values()){
-            externalOntologies.add(ontologyEnum.getBioPortalAcronym());
+            if(ontologyEnum.getNeedUpdating()) {
+                externalOntologies.add(ontologyEnum.getBioPortalAcronym());
+            }
         }
         Collections.sort(externalOntologies);
         for(String externalOntologie : externalOntologies){
@@ -67,7 +69,9 @@ public class Efo2Xref {
 
         List<String> externalOntologies = new ArrayList<String>();
         for(OntologyEnum ontologyEnum : OntologyEnum.values()){
-            externalOntologies.add(ontologyEnum.getBioPortalAcronym());
+            if(ontologyEnum.getNeedUpdating()) {
+                externalOntologies.add(ontologyEnum.getBioPortalAcronym());
+            }
         }
         Collections.sort(externalOntologies);
 

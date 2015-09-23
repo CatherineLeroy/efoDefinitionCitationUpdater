@@ -5,21 +5,24 @@ package uk.ac.ebi.spot.updater.utils;
  */
 public enum OntologyEnum {
 
-    HUMAN_DESEASE_ONTOLOGY("DOID", "http://www.ebi.ac.uk/efo/DOID_definition_citation"),
-    NCI_THESAURUS("NCIT", "http://www.ebi.ac.uk/efo/NCI_Thesaurus_definition_citation"),
+    HUMAN_DESEASE_ONTOLOGY("DOID", "http://www.ebi.ac.uk/efo/DOID_definition_citation", true),
+    NCI_THESAURUS("NCIT", "http://www.ebi.ac.uk/efo/NCI_Thesaurus_definition_citation", true),
     //International Classification of Diseases, Version 9 - Clinical Modification
-    INTERNATIONAL_CLASSIFICATION_OF_DISEASES("ICD9CM", "http://www.ebi.ac.uk/efo/ICD9_definition_citation"),
+    INTERNATIONAL_CLASSIFICATION_OF_DISEASES("ICD9CM", "http://www.ebi.ac.uk/efo/ICD9_definition_citation", true),
     //Systematized Nomenclature of Medicine - Clinical Terms
-    SYSTEMATIZED_NOMEMCLATURE_OF_MEDICINE("SNOMEDCT", "http://www.ebi.ac.uk/efo/SNOMEDCT_definition_citation"),
+    SYSTEMATIZED_NOMEMCLATURE_OF_MEDICINE("SNOMEDCT", "http://www.ebi.ac.uk/efo/SNOMEDCT_definition_citation", true),
    //Medical Subject Headinds
-   MEDICAL_SUBJECT_HEADINGS("MESH", "http://www.ebi.ac.uk/efo/MSH_definition_citation");
+    MEDICAL_SUBJECT_HEADINGS("MESH", "http://www.ebi.ac.uk/efo/MSH_definition_citation", true);
+
 
     private String bioPortalAcronym;
     private String efoDefinitionCitationIRI;
+    private boolean needUpdating;
 
-    private OntologyEnum(String bioPortalAcronym, String efoDefinitionCitation){
+    private OntologyEnum(String bioPortalAcronym, String efoDefinitionCitation, boolean needUpdating){
         this.bioPortalAcronym = bioPortalAcronym;
         this.efoDefinitionCitationIRI = efoDefinitionCitation;
+        this.needUpdating = needUpdating;
     }
 
     public String getBioPortalAcronym() {
@@ -28,6 +31,9 @@ public enum OntologyEnum {
 
     public String getEfoDefinitionCitationIRI() {
         return efoDefinitionCitationIRI;
+    }
+    public boolean getNeedUpdating() {
+        return needUpdating;
     }
 
     public static OntologyEnum getForBioPortalAcronym(String bioPortalAcronym){

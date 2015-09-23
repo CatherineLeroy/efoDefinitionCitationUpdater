@@ -91,28 +91,30 @@ public class XrefGetterCallable  implements Callable<String>{
 
             //For each of the ontology we want to get the update from (DOID, NCIT...)
             for (OntologyEnum ontologyEnum : OntologyEnum.values()) {
-                lastOntologyEnum = ontologyEnum;
 
-                Collection<String> xrefs = new ArrayList<>();
-                JsonNode bioportalNode;
+                if(ontologyEnum.getNeedUpdating()) {
+                    lastOntologyEnum = ontologyEnum;
 
-                //Search in bioportal with the class label
-                bioportalNode = bioportalClassRetriever.getJsonNode(label, ontologyEnum, true);
+                    Collection<String> xrefs = new ArrayList<>();
+                    JsonNode bioportalNode;
 
-                // If one or more bioportal entries were found for the given label and ontologyEnum, then fetch those bioportal
-                // entries ids and add them to our list of xrefs.
-                // (Note that the getXrefs method will only return xref from the bioportal entries where our label was
-                // an exact match to the bioportal entry preflabel).
-                if(bioportalNode != null) {
-                    xrefs = getXrefs(bioportalNode, ontologyEnum);
-                }
+                    //Search in bioportal with the class label
+                    bioportalNode = bioportalClassRetriever.getJsonNode(label, ontologyEnum, true);
 
-                //If no bioportal entry was found for that label or the bioportal entry found was only matching our label
-                // through the bioportal synonym then querry bioportal using all the alternative_term.
-                if(xrefs.size() == 0){
-                    URL url = new URL("http://www.ebi.ac.uk/efo/alternative_term");
-                    OWLAnnotationProperty alternativeTermAnnotProperty = factory.getOWLAnnotationProperty(IRI.create(url));
-                    for (OWLAnnotation annotation : this.class2Update.getAnnotations(containerOntology, alternativeTermAnnotProperty)) {
+                    // If one or more bioportal entries were found for the given label and ontologyEnum, then fetch those bioportal
+                    // entries ids and add them to our list of xrefs.
+                    // (Note that the getXrefs method will only return xref from the bioportal entries where our label was
+                    // an exact match to the bioportal entry preflabel).
+                    if (bioportalNode != null) {
+                        xrefs = getXrefs(bioportalNode, ontologyEnum);
+                    }
+
+                    //If no bioportal entry was found for that label or the bioportal entry found was only matching our label
+                    // through the bioportal synonym then querry bioportal using all the alternative_term.
+                    if (xrefs.size() == 0) {
+                        URL url = new URL("http://www.ebi.ac.uk/efo/alternative_term");
+                        OWLAnnotationProperty alternativeTermAnnotProperty = factory.getOWLAnnotationProperty(IRI.create(url));
+                        for (OWLAnnotation annotation : this.class2Update.getAnnotations(containerOntology, alternativeTermAnnotProperty)) {
                             if (annotation.getValue() instanceof OWLLiteral) {
                                 OWLLiteral val = (OWLLiteral) annotation.getValue();
                                 String synonym = val.getLiteral();
@@ -122,18 +124,18 @@ public class XrefGetterCallable  implements Callable<String>{
                                 // then fetch those bioportal entries ids and add them to our list of xrefs.
                                 // (Note that the getXrefs method will only return xref from the bioportal entries where
                                 // our alternative_term was an exact match to the bioportal entry preflabel).
-                                if(bioportalNode != null){
+                                if (bioportalNode != null) {
                                     xrefs.addAll(getXrefs(bioportalNode, ontologyEnum));
                                 }
+                            }
                         }
                     }
-                }
 
-                //Add the xrefs to the efo2Xref object to link them to the correct ontologyEnum they belong to.
-                if(xrefs.size() > 0) {
-                    efo2Xref.addXrefForOntology(xrefs, ontologyEnum);
+                    //Add the xrefs to the efo2Xref object to link them to the correct ontologyEnum they belong to.
+                    if (xrefs.size() > 0) {
+                        efo2Xref.addXrefForOntology(xrefs, ontologyEnum);
+                    }
                 }
-
             }
 
 
